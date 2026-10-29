@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="lt">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ANDRELIS: Išgyvenk pamainą</title>
+<style>
+:root{--bg:#0b1020;--panel:#141d30;--panel2:#1c2940;--text:#f4f7ff;--muted:#a9b7d0;--pink:#ff4da6;--blue:#44b8ff;--green:#4de0a1;--yellow:#ffd166;--red:#ff5b68}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#1a2c4b,#080c17 60%);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,sans-serif}
+button,input{font:inherit}button{cursor:pointer;border:1px solid #405273;background:#263956;color:white;padding:11px 13px;border-radius:12px;font-weight:750;transition:.12s}button:hover{filter:brightness(1.15);transform:translateY(-1px)}button:disabled{opacity:.4;cursor:not-allowed;transform:none}
+header{display:flex;gap:14px;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid #2a3850;background:#080d18dd;position:sticky;top:0;z-index:3;backdrop-filter:blur(10px)}
+.logo{font-weight:950;font-size:clamp(18px,3vw,27px);letter-spacing:.5px}.logo span{color:#ff5a5f}.topstat{display:flex;gap:12px;align-items:center;color:var(--muted);font-size:13px}.pill{padding:6px 10px;background:#17243a;border-radius:999px;border:1px solid #2c4160}
+main{max-width:1320px;margin:auto;padding:18px;display:grid;grid-template-columns:270px minmax(0,1fr) 300px;gap:14px}
+.panel{background:linear-gradient(150deg,#172238,#101827);border:1px solid #2c3b55;border-radius:18px;padding:15px;box-shadow:0 12px 35px #0003}.panel h2,.panel h3{margin:0 0 12px;font-size:15px;text-transform:uppercase;letter-spacing:.7px}.sub{color:var(--muted);font-size:13px}.meter{height:11px;border-radius:99px;background:#29364c;overflow:hidden;margin:6px 0 13px}.fill{height:100%;width:50%;background:linear-gradient(90deg,var(--green),var(--blue));transition:width .2s}.fill.patience{background:linear-gradient(90deg,var(--red),var(--pink))}
+.profile{display:flex;gap:12px;align-items:center}.avatar{width:72px;height:72px;border-radius:18px;background:linear-gradient(135deg,#354d70,#101827);display:grid;place-items:center;font-size:38px;border:1px solid #4b6385}
+.statrow{display:flex;justify-content:space-between;gap:8px;font-size:13px}.statrow strong{font-variant-numeric:tabular-nums}.center{display:flex;flex-direction:column;gap:14px}.shop{min-height:320px;position:relative;overflow:hidden;background:linear-gradient(180deg,#243b5b,#172239 60%,#111827);border-radius:18px;border:1px solid #354c6b;padding:18px}
+.shop:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 15% 20%,#4fb8ff1c 0 80px,transparent 81px),radial-gradient(circle at 80% 70%,#ff4da61a 0 130px,transparent 131px);pointer-events:none}
+.shop-head{display:flex;justify-content:space-between;gap:10px;align-items:start;position:relative}.shop-title{font-size:clamp(21px,3vw,32px);font-weight:950}.shop-title span{color:#ff5a5f}.scene{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px;position:relative}
+.machine{border-radius:16px;background:#0b1321;border:1px solid #3d5576;padding:14px;min-height:150px;display:flex;flex-direction:column;justify-content:space-between}
+.machine-icon{font-size:39px}.machine-status{font-weight:850}.bubble{background:#f7f8fc;color:#172033;padding:11px 13px;border-radius:15px;font-weight:750;box-shadow:0 5px 0 #0002;margin-top:12px;position:relative}
+.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.action{min-height:92px;text-align:left;display:flex;flex-direction:column;gap:5px;background:linear-gradient(145deg,#253c5c,#18253b)}.action .ico{font-size:23px}.action small{color:#bac9df;font-weight:500}.action.good{border-color:#247d68}.action.warn{border-color:#8a5e30}
+.task{display:flex;gap:10px;align-items:center;padding:10px;border-radius:12px;background:#101a2b;border:1px solid #2c3b55;margin-bottom:8px}.task.active{border-color:var(--yellow);box-shadow:0 0 0 1px #ffd16622}.task.done{opacity:.55}.task-icon{font-size:24px}.task-text{flex:1}.task-text strong{display:block;font-size:13px}.task-text small{color:var(--muted)}.badge{font-size:11px;padding:4px 7px;border-radius:99px;background:#2a3d59;color:#c8d7ef;white-space:nowrap}
+.log{height:155px;overflow:auto;display:flex;flex-direction:column-reverse;gap:7px}.logline{font-size:12px;color:#c3cee1;border-left:3px solid #47678f;padding:5px 8px;background:#0e1726;border-radius:0 7px 7px 0}.logline.ouch{border-color:var(--red)}.logline.goodline{border-color:var(--green)}
+footer{max-width:1320px;margin:0 auto;padding:0 18px 25px;color:var(--muted);font-size:12px}
+.overlay{position:fixed;inset:0;background:#050812eF;display:flex;align-items:center;justify-content:center;padding:20px;z-index:10}.modal{max-width:520px;width:100%;text-align:center;padding:28px;background:linear-gradient(145deg,#1c2b45,#101725);border:1px solid #435a7a;border-radius:24px;box-shadow:0 20px 80px #0009}.modal h1{font-size:clamp(28px,5vw,42px);margin:5px 0 10px}.modal p{color:#c4d0e4}.modal .hero{font-size:65px}.modal button{margin-top:12px;background:linear-gradient(90deg,#f43f9a,#8d5cff);border:0;padding:14px 22px}.hidden{display:none!important}.leaderboard{display:flex;gap:8px;align-items:center}.leaderboard input{min-width:0;width:100%;padding:10px;border-radius:10px;border:1px solid #3c506e;background:#0b1321;color:white}
+@media(max-width:1050px){main{grid-template-columns:230px minmax(0,1fr)}.right{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:14px}.right .panel{margin:0}}
+@media(max-width:700px){header{align-items:flex-start;flex-direction:column}.topstat{flex-wrap:wrap}main{grid-template-columns:1fr;padding:10px}.right{grid-column:auto;display:flex;flex-direction:column}.scene{grid-template-columns:1fr}.actions{grid-template-columns:repeat(2,1fr)}.shop{padding:13px}.panel{padding:13px}}
+</style>
+</head>
+<body>
+<header><div class="logo">📸 FOTO<span>PRO</span> <span style="color:#d8e5fa">/ ANDRELIS: IŠGYVENK PAMAINĄ</span></div><div class="topstat"><span class="pill">🏁 Lygis <b id="levelTop">1</b></span><span class="pill">⏱️ <b id="clock">00:00</b></span><span class="pill">⭐ Taškai <b id="scoreTop">0</b></span></div></header>
+<main>
+<aside class="panel">
+<h2>🧍 Andrelio būsena</h2><div class="profile"><div class="avatar">🧑🏻‍🔧</div><div><strong>ANDRELIS</strong><div class="sub">Vienintelis vyras pamainoje</div><div style="color:var(--green);font-weight:800">● Dirba. Tikriausiai.</div></div></div>
+<div style="margin-top:18px"><div class="statrow"><span>🧠 Kantrybė</span><strong id="patienceText">100 / 100</strong></div><div class="meter"><div class="fill patience" id="patienceBar" style="width:100%"></div></div>
+<div class="statrow"><span>⚡ Energija</span><strong id="energyText">100%</strong></div><div class="meter"><div class="fill" id="energyBar" style="width:100%"></div></div>
+<div class="statrow"><span>💨 Lakstymo greitis</span><strong id="speedText">1.0x</strong></div><div class="meter"><div class="fill" id="speedBar" style="width:20%"></div></div></div>
+<hr style="border:0;border-top:1px solid #2b3b55;margin:18px 0"><h3>🎯 Pamainos rekordas</h3><div class="statrow"><span>Įvykdytos užduotys</span><strong id="doneCount">0</strong></div><div class="statrow"><span>Pasiektas lygis</span><strong id="levelSide">1</strong></div><div class="statrow"><span>Geriausias rezultatas</span><strong id="bestScore">0</strong></div>
+<div class="bubble" id="quip">„Tuoj padarysiu.“ – garsiausias Andrelio melas.</div>
+</aside>
+<section class="center">
+<div class="shop">
+<div class="shop-head"><div><div class="shop-title">FOTOPRO <span>CHAOS MODE</span></div><div class="sub">Trys kolegės. Vienas Andrelis. Nulis ramybės.</div></div><div class="pill">🔥 Chaosas: <b id="chaos">1</b>/10</div></div>
+<div class="scene">
+<div class="machine"><div class="machine-icon" id="machineIcon">🖨️</div><div><div class="machine-status" id="machineStatus">Foto mašina veikia</div><div class="sub" id="machineSub">Nuotraukos gaminasi. Kol kas.</div></div></div>
+<div class="machine"><div class="machine-icon">👩🏼‍💼 👩🏻‍🦰 👩🏽</div><div><div class="machine-status">Trys kolegės stebi</div><div class="sub" id="girlsSub">„Andréli, o ką tu čia veiki?“</div></div><div class="bubble" id="girlQuote">„Kodėl foto mašina stovi?!“</div></div>
+</div></div>
+<div class="panel"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><h2>🚨 Ką reikia padaryti dabar</h2><span class="badge" id="timerBadge">Pasirink užduotį</span></div><div id="currentTask" class="task active"><div class="task-icon">🟢</div><div class="task-text"><strong>Pasiruošk pamainai</strong><small>Pradėk ir parodyk, kiek ilgai ištemps Andrelis.</small></div></div><div class="sub" id="hint">Užduotys atsiranda vis greičiau. Jei per ilgai delsi, kantrybė kris. Pasiekus −100: GAME OVER.</div></div>
+<div class="actions">
+<button class="action good" id="btnPrint" disabled><span class="ico">🖼️</span><strong>Koreguoti / gaminti</strong><small>Redaguok nuotraukas</small></button>
+<button class="action warn" id="btnUnjam" disabled><span class="ico">🛠️</span><strong>Atkimšti mašiną</strong><small>Vėl užstrigo, krw</small></button>
+<button class="action" id="btnChem" disabled><span class="ico">🧪</span><strong>Chemija</strong><small>Įpilti arba išpilti</small></button>
+<button class="action" id="btnPaper" disabled><span class="ico">📄</span><strong>Pakeisti popierių</strong><small>Ritė baigėsi</small></button>
+<button class="action" id="btnCollect" disabled><span class="ico">📷</span><strong>Išimti nuotraukas</strong><small>Neužmiršk produkcijos</small></button>
+<button class="action" id="btnGirls" disabled><span class="ico">💅</span><strong>Nueiti pas koleges</strong><small>„Andréli, ateik čia!“</small></button>
+<button class="action" id="btnWC" disabled><span class="ico">🚻</span><strong>WC pertrauka</strong><small>Net herojai žmonės</small></button>
+<button class="action" id="btnReturn" disabled><span class="ico">🏃</span><strong>Grįžti prie užsakymo</strong><small>Lakstyk pirmyn atgal</small></button>
+<button class="action" id="btnCoffee" disabled><span class="ico">☕</span><strong>Gurkšnis kavos</strong><small>+ truputis energijos</small></button>
+</div>
+</section>
+<aside class="right" style="display:flex;flex-direction:column;gap:14px">
+<div class="panel"><h2>📋 Aktyvūs rūpesčiai</h2><div id="taskList"><div class="task"><div class="task-icon">📸</div><div class="task-text"><strong>Nuotraukų užsakymas</strong><small>Pradėk žaidimą</small></div><span class="badge">Laukia</span></div></div></div>
+<div class="panel"><h2>😂 Pamainos memai</h2><div class="bubble" id="meme">„Kai pagaliau pradeda gamintis nuotraukos, bet kolegė sako: Andréli…“</div><button style="width:100%;margin-top:10px" id="memeBtn" disabled>🎲 Kitas memas</button></div>
+<div class="panel"><h2>📡 Tiesioginis pamainos logas</h2><div class="log" id="log"><div class="logline">Sistema pasiruošusi. Andrelis dar turi vilties.</div></div></div>
+<div class="panel"><h2>🏆 Rezultatas</h2><div class="sub">Įrašyk vardą ir išsaugok rekordą šiame įrenginyje.</div><div class="leaderboard" style="margin-top:10px"><input id="playerName" maxlength="18" placeholder="Vardas / slapyvardis"><button id="saveScore">💾</button></div><div id="leaderboard" class="sub" style="margin-top:10px">Rekordų dar nėra. Pamaina dar neprasidėjo.</div></div>
+</aside>
+</main>
+<footer>Žaidimas yra draugiškas vidinis pokštas. Rezultatai saugomi tik šioje naršyklėje. Atnaujinus puslapį rekordai išlieka, aktyvi pamaina – ne.</footer>
+<div class="overlay" id="startOverlay"><div class="modal"><div class="hero">📸🏃‍♂️💅</div><h1>ANDRELIS: IŠGYVENK PAMAINĄ</h1><p>Tu vienas. Kolegės trys. Foto mašina turi savo nuomonę. Užduotys greitėja su kiekvienu lygiu.</p><p><b>Tikslas:</b> kuo ilgiau atlikti užduotis ir išlaikyti kantrybę aukščiau −100. Vėluosi – kantrybė kris. Pasieks −100? Viskas, krw, game over.</p><button id="startBtn">PRADĖTI PAMAINĄ 🚀</button></div></div>
+<div class="overlay hidden" id="gameOver"><div class="modal"><div class="hero">💀📸</div><h1>GAME OVER</h1><p id="overReason">Andrelio kantrybė pasiekė −100.</p><h2 id="finalScore">0 taškų</h2><p id="finalStats"></p><button id="restartBtn">DAR VIENĄ PAMAINĄ 🔁</button></div></div>
+<script>
+const $=id=>document.getElementById(id);
+const quips=['„Tuoj padarysiu.“ – garsiausias Andrelio melas.','Trys kolegės, vienas darbuotojas. Kas galėjo nutikti?','Foto mašina tyli. Per daug tyliai.','Andrelis ne bėga, jis optimizuoja maršrutą.','„Tik trumpam“ yra laiko vienetas, kurio fizika dar nepaaiškino.'];
+const memes=['Kai foto mašina pagaliau gamina, bet kažkas pakviečia: „Andréliiii…“','POV: atėjai pakeisti popieriaus, o grįžęs turi tris naujus darbus.','Kai mašina užstringa: „Aš ne sugedau. Aš tiesiog nenoriu.“','Vienas vyras, trys vadovės ir keturi skirtingi nurodymai.','„Tuoj grįšiu“ – Andrelis, jau trečią kartą perėjęs parduotuvę.','Chemija įpilta. Chemija išpilta. Dabar trūksta tik ramybės.','Kai nuotraukos stovi, kolegės žiūri į tave, lyg tu būtum pats spausdintuvas.','WC: 2 minutės ramybės. Kolegių radaras: AKTYVUOTAS.','Klientas: „Tik kelios nuotraukos.“ Užsakymas: 86 failai.','Andrelio kantrybė įkėlė užklausą, bet serveris nebeatsako.'];
+const tasks=[
+{id:'edit',name:'Koreguoti nuotraukas ir paleisti gamybą',icon:'🖼️',action:'btnPrint',desc:'Pataisyk nuotraukas, kad kolegės nežiūrėtų į stovinčią mašiną.',time:5},
+{id:'jam',name:'Atkimšti užstrigusią foto mašiną',icon:'🛠️',action:'btnUnjam',desc:'Mašina užstrigo. Ji taip daro dažniau nei turėtų.',time:4},
+{id:'chemIn',name:'Įpilti chemijos',icon:'🧪',action:'btnChem',desc:'Chemijos lygis žemas. Pirmyn prie mašinos.',time:4},
+{id:'chemOut',name:'Išpilti panaudotą chemiją',icon:'🧴',action:'btnChem',desc:'Dabar reikia išpilti chemiją. Žinoma, kodėl gi ne.',time:4},
+{id:'paper',name:'Pakeisti popierių foto mašinoje',icon:'📄',action:'btnPaper',desc:'Popierius baigėsi pačiu tinkamiausiu metu.',time:4},
+{id:'collect',name:'Išimti pagamintas nuotraukas',icon:'📷',action:'btnCollect',desc:'Nuotraukos laukia. Nepalik jų mašinoje.',time:4},
+{id:'girls',name:'Nueiti pas koleges',icon:'💅',action:'btnGirls',desc:'Trys kolegės kviečia. Ignoruoti neleidžiama.',time:5},
+{id:'wc',name:'Nueiti į WC',icon:'🚻',action:'btnWC',desc:'Net Andrelis turi žmogaus poreikių.',time:5},
+{id:'return',name:'Grįžti prie užsakymo',icon:'🏃',action:'btnReturn',desc:'Grįžk ten, kur buvai, prieš tau vėl ką nors pavedant.',time:4}
+];
+let state, timer=null, tickTimer=null;
+function fresh(){return {running:false,patience:100,energy:100,score:0,level:1,done:0,elapsed:0,current:null,queue:[],deadline:0,taskTimer:0,taskMax:0,chaos:1,completed:new Set(),machine:'Veikia',machineIcon:'🖨️',girlsCall:false,needsReturn:false,startedAt:0};}
+function log(msg,type=''){const el=document.createElement('div');el.className='logline '+type;el.textContent=new Date().toLocaleTimeString('lt-LT',{hour:'2-digit',minute:'2-digit'})+' · '+msg;$('log').prepend(el);}
+function setButtons(enabled){['btnPrint','btnUnjam','btnChem','btnPaper','btnCollect','btnGirls','btnWC','btnReturn','btnCoffee','memeBtn'].forEach(id=>$(id).disabled=!enabled);}
+function render(){ $('levelTop').textContent=state.level;$('levelSide').textContent=state.level;$('scoreTop').textContent=state.score;$('doneCount').textContent=state.done;$('patienceText').textContent=state.patience+' / 100';$('patienceBar').style.width=Math.max(0,Math.min(100,(state.patience+100)/2))+'%';$('energyText').textContent=state.energy+'%';$('energyBar').style.width=state.energy+'%';$('speedText').textContent=(1+(state.level-1)*.22).toFixed(1)+'x';$('speedBar').style.width=Math.min(100,20+(state.level-1)*8)+'%';$('chaos').textContent=Math.min(10,state.level);$('clock').textContent=fmt(state.elapsed);$('machineStatus').textContent=state.machine;$('machineIcon').textContent=state.machineIcon;$('bestScore').textContent=localStorage.andrelisBest||0;
+let cur=state.current;
+if(cur){$('currentTask').innerHTML=`<div class="task-icon">${cur.icon}</div><div class="task-text"><strong>${cur.name}</strong><small>${cur.desc}</small></div><span class="badge">${Math.max(0,Math.ceil(state.deadline-state.elapsed))} s</span>`;$('timerBadge').textContent='⏳ '+Math.max(0,Math.ceil(state.deadline-state.elapsed))+' s';}
+else {$('currentTask').innerHTML='<div class="task-icon">🟢</div><div class="task-text"><strong>Pasiruošk pamainai</strong><small>Pasirink kitą veiksmą.</small></div>';$('timerBadge').textContent='Pasirink užduotį';}
+$('taskList').innerHTML=state.queue.length?state.queue.map(t=>`<div class="task ${t===state.current?'active':''}"><div class="task-icon">${t.icon}</div><div class="task-text"><strong>${t.name}</strong><small>${t.desc}</small></div><span class="badge">${t===state.current?'DABAR':'EILĖ'}</span></div>`).join(''):'<div class="sub">Šiuo metu nėra aktyvių rūpesčių. Įtartina.</div>';
+$('girlsSub').textContent=state.girlsCall?'„ANDRÉLIIII, ATEIK ČIA!“':'„Tik trumpam reikės pagalbos…“';
+}
+function fmt(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(Math.floor(s%60)).padStart(2,'0')}
+function pickTask(){if(!state.running)return;let pool=tasks.filter(t=>!state.completed.has(t.id));if(!pool.length){state.completed.clear();pool=tasks.slice();log('Visas chaoso ratas užbaigtas. Sistema sugalvojo naujų darbų.','goodline')}
+let t=pool[Math.floor(Math.random()*pool.length)];
+// Prefer return after a detour, because the running back-and-forth is the joke.
+if(state.needsReturn && Math.random()<.72)t=tasks.find(x=>x.id==='return');
+if(state.girlsCall && Math.random()<.55)t=tasks.find(x=>x.id==='girls');
+if(state.machine==='Užstrigo' && Math.random()<.55)t=tasks.find(x=>x.id==='jam');
+if(state.machine==='Trūksta chemijos' && Math.random()<.55)t=tasks.find(x=>x.id==='chemIn');
+if(state.machine==='Reikia išpilti chemiją' && Math.random()<.55)t=tasks.find(x=>x.id==='chemOut');
+if(state.machine==='Baigėsi popierius' && Math.random()<.55)t=tasks.find(x=>x.id==='paper');
+if(state.machine==='Nuotraukos paruoštos' && Math.random()<.55)t=tasks.find(x=>x.id==='collect');
+state.current=t;state.taskMax=Math.max(3,t.time/(1+(state.level-1)*.22));state.deadline=state.elapsed+state.taskMax;state.completed.add(t.id);
+let action=$(t.action);action.disabled=false;action.style.boxShadow='0 0 0 2px #ffd16677';setTimeout(()=>action.style.boxShadow='',450);
+$('hint').textContent=t.desc+' Jei nespėsi, kantrybė mažės.';
+if(t.id==='jam'){state.machine='Užstrigo';state.machineIcon='⚠️';$('girlQuote').textContent='„Andréli, kodėl niekas nesigamina?!“';}
+if(t.id==='chemIn'){state.machine='Trūksta chemijos';state.machineIcon='🧪';}
+if(t.id==='chemOut'){state.machine='Reikia išpilti chemiją';state.machineIcon='🧴';}
+if(t.id==='paper'){state.machine='Baigėsi popierius';state.machineIcon='📄';}
+if(t.id==='collect'){state.machine='Nuotraukos paruoštos';state.machineIcon='📸';}
+if(t.id==='girls'){state.girlsCall=true;$('girlQuote').textContent='„Andréli, ateik pas mus, reikia tavęs!“';}
+if(t.id==='return')state.needsReturn=false;
+log('NAUJA UŽDUOTIS: '+t.name,'ouch');render();
+}
+function complete(id){if(!state.running)return;if(!state.current){pickTask();return}if(state.current.id!==id){state.patience=Math.max(-100,state.patience-7);state.energy=Math.max(0,state.energy-3);log('Ne ta užduotis, Andrelį! −7 kantrybės.','ouch');render();return}
+let t=state.current;let remaining=state.deadline-state.elapsed;state.score+=10+state.level*3;state.done++;state.patience=Math.min(100,state.patience+3);state.energy=Math.max(0,state.energy-2);
+if(t.id==='edit'){state.machine='Veikia';state.machineIcon='🖨️';$('girlQuote').textContent='„Nu va, dabar jau gaminasi!“';}
+if(t.id==='jam'){state.machine='Veikia';state.machineIcon='🖨️';}
+if(t.id==='chemIn')state.machine='Reikia išpilti chemiją';
+if(t.id==='chemOut')state.machine='Veikia';
+if(t.id==='paper')state.machine='Veikia';
+if(t.id==='collect'){state.machine='Veikia';state.machineIcon='🖨️';}
+if(t.id==='girls'){state.girlsCall=false;state.needsReturn=true;$('girlQuote').textContent='„Ačiū! O dar vienas dalykas…“';}
+if(t.id==='wc'){state.needsReturn=true;log('WC pertrauka baigta. Ramybė truko trumpiau nei tikėtasi.');}
+if(t.id==='return'){state.needsReturn=false;$('girlQuote').textContent='„Andréli, kur buvai?“';}
+if(t.id==='coffee'){state.energy=Math.min(100,state.energy+22);state.patience=Math.min(100,state.patience+6);}
+log('Atlikta: '+t.name+' · +'+(10+state.level*3)+' taškų','goodline');state.current=null;
+if(state.done>0 && state.done%5===0){state.level++;log('LYGIS PAKILO! Viskas greitėja. Dabar jau '+state.level+' lygis.','ouch');$('meme').textContent=memes[Math.floor(Math.random()*memes.length)];}
+if(state.patience<=-100){gameOver('Kantrybė nukrito iki −100. Trys kolegės ir foto mašina laimėjo.');return}
+pickTask();render();
+}
+function act(id){if(!state.running)return;complete(id)}
+function tick(){if(!state.running)return;state.elapsed+=.25;let c=state.current;if(c){let left=state.deadline-state.elapsed;if(left<=0){state.patience=Math.max(-100,state.patience-(8+state.level*2));state.energy=Math.max(0,state.energy-4);log('PAVĖLAVAI! −'+(8+state.level*2)+' kantrybės. Kolegių žvilgsniai aštrėja.','ouch');state.current=null;if(state.patience<=-100){gameOver('Andrelio kantrybė pasiekė −100. Pamaina baigta.');return}pickTask();}}
+if(Math.random()<.025*(1+(state.level-1)*.2)){state.patience=Math.max(-100,state.patience-2);$('girlQuote').textContent=memes[Math.floor(Math.random()*memes.length)];log('Kolegė: „Andréli, dar vienas dalykėlis…“ −2 kantrybės.','ouch')}
+if(state.elapsed>0 && Math.floor(state.elapsed)%13===0 && Math.random()<.08){state.machine='Užstrigo';state.machineIcon='⚠️';log('Foto mašina vėl užstrigo. Žinoma.','ouch')}
+if(state.energy<=0 && Math.random()<.2){state.patience=Math.max(-100,state.patience-2);log('Energija baigėsi. Andrelis veikia iš pykčio.','ouch')}
+if(state.patience<=-100){gameOver('Andrelio kantrybė pasiekė −100.');return}render();}
+function start(){state=fresh();state.running=true;state.startedAt=Date.now();$('startOverlay').classList.add('hidden');$('gameOver').classList.add('hidden');setButtons(true);$('log').innerHTML='';log('Pamaina prasidėjo. Trys kolegės jau kažko nori.');pickTask();render();clearInterval(tickTimer);tickTimer=setInterval(tick,250)}
+function gameOver(reason){state.running=false;clearInterval(tickTimer);setButtons(false);$('overReason').textContent=reason;$('finalScore').textContent=state.score+' taškų';$('finalStats').textContent=`Lygis ${state.level} · Atlikta užduočių: ${state.done} · Išgyventa ${fmt(state.elapsed)}`;$('gameOver').classList.remove('hidden');if(state.score>Number(localStorage.andrelisBest||0))localStorage.andrelisBest=state.score;render();log('GAME OVER. Andrelis oficialiai išėjo į pertrauką.','ouch')}
+$('startBtn').onclick=start;$('restartBtn').onclick=start;
+$('btnPrint').onclick=()=>act('edit');$('btnUnjam').onclick=()=>act('jam');$('btnChem').onclick=()=>{if(state.current?.id==='chemIn')act('chemIn');else if(state.current?.id==='chemOut')act('chemOut');else act('chemIn')};$('btnPaper').onclick=()=>act('paper');$('btnCollect').onclick=()=>act('collect');$('btnGirls').onclick=()=>act('girls');$('btnWC').onclick=()=>act('wc');$('btnReturn').onclick=()=>act('return');$('btnCoffee').onclick=()=>{if(state.current){state.patience=Math.max(-100,state.patience-5);log('Kava nebuvo aktyvi užduotis. −5 kantrybės.','ouch');render()}else{state.energy=Math.min(100,state.energy+22);state.patience=Math.min(100,state.patience+4);log('Greitas kavos gurkšnis. +energijos.','goodline');render()}};
+$('memeBtn').onclick=()=>{$('meme').textContent=memes[Math.floor(Math.random()*memes.length)];state.patience=Math.max(-100,state.patience-1);render()};
+$('saveScore').onclick=()=>{let name=$('playerName').value.trim()||'Bevardis herojus';let list=JSON.parse(localStorage.andrelisScores||'[]');list.push({name,score:state?.score||0,level:state?.level||1,done:state?.done||0,date:new Date().toLocaleDateString('lt-LT')});list.sort((a,b)=>b.score-a.score);list=list.slice(0,10);localStorage.andrelisScores=JSON.stringify(list);$('leaderboard').innerHTML=list.map((x,i)=>`${i+1}. <b>${escapeHtml(x.name)}</b> · ${x.score} tšk. · ${x.level} lygis`).join('<br>');log('Rezultatas įrašytas į vietinę lentelę.','goodline')};
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function loadScores(){let list=JSON.parse(localStorage.andrelisScores||'[]');if(list.length)$('leaderboard').innerHTML=list.map((x,i)=>`${i+1}. <b>${escapeHtml(x.name)}</b> · ${x.score} tšk. · ${x.level} lygis`).join('<br>')}
+loadScores();state=fresh();render();
+</script>
+</body></html>
